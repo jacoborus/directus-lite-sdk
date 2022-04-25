@@ -3,6 +3,10 @@ export class LiteSdk {
   constructor(apiUrl: string) {
     this.apiUrl = apiUrl;
   }
+
+  query(path: string) {
+    return `${this.apiUrl}/${path}`;
+  }
 }
 
 export default LiteSdk;
