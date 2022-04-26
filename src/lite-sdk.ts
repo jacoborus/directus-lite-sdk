@@ -76,6 +76,10 @@ export class LiteSdk {
     const queryString = getQueryParams(params);
     return `${this.apiUrl}/${path}${queryString}`;
   }
+
+  file(id: string): string {
+    return `${this.apiUrl}/assets/${id}`;
+  }
 }
 
 export default LiteSdk;

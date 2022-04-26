@@ -86,3 +86,12 @@ Deno.test("query with filter and deep", () => {
     expected,
   );
 });
+
+Deno.test("file", () => {
+  const expected = "https://example.com/assets/123456";
+  const result = sdk.file("123456");
+  assertEquals(
+    result,
+    expected,
+  );
+});
