@@ -1,8 +1,8 @@
 # directus-lite-sdk
 
-The unofficial Directus Lite SDK
+The unofficial Directus Lite SDK in less than 1Kb
 
-- Less than 1Kb
+- ~750 bytes
 - It works on the browser, Deno and Node.js
 - Bring your own fetch
 
@@ -18,7 +18,7 @@ Create a new instance of the SDK passing the URL of your Directus API:
 
 ```js
 // Deno
-import DirectusLiteSdk from "https://deno.land/x/directus-lite-sdk/src/LiteSdk.ts";
+import DirectusLiteSdk from "https://deno.land/x/directus_lite_sdk/src/lite-sdk.ts";
 // Node
 import DirectusLiteSdk from "directus-lite-sdk";
 
