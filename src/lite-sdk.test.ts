@@ -41,3 +41,31 @@ Deno.test("query with fields as string", () => {
     expected,
   );
 });
+
+Deno.test("query with filter and deep", () => {
+  const expected =
+    '?filter={"project":{"_eq":"lite-sdk"},"year(pubdate)":2022}' +
+    '&deep={"translations":{"_filter":{"languages_code":{"_eq":"en-ES"}}}}';
+
+  const result = getQueryParams({
+    filter: {
+      project: {
+        _eq: "lite-sdk",
+      },
+      "year(pubdate)": 2022,
+    },
+    deep: {
+      translations: {
+        _filter: {
+          languages_code: {
+            _eq: "en-ES",
+          },
+        },
+      },
+    },
+  });
+  assertEquals(
+    result,
+    expected,
+  );
+});
