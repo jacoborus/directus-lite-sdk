@@ -115,7 +115,7 @@ Deno.test("query accept access_token", () => {
 
 Deno.test("file", () => {
   const expected = "https://example.com/assets/123456";
-  const result = sdk.file("123456");
+  const result = sdk.fileUrl("123456");
   assertEquals(
     result,
     expected,
@@ -124,7 +124,7 @@ Deno.test("file", () => {
 
 Deno.test("file accept access_token", () => {
   const expected = "https://example.com/assets/123456?access_token=1234abcd";
-  const result = sdk.file("123456", { access_token: "1234abcd" });
+  const result = sdk.fileUrl("123456", { access_token: "1234abcd" });
   assertEquals(
     result,
     expected,
@@ -133,7 +133,7 @@ Deno.test("file accept access_token", () => {
 
 Deno.test("file accept key", () => {
   const expected = "https://example.com/assets/123456?key=abcd";
-  const result = sdk.file("123456", { key: "abcd" });
+  const result = sdk.fileUrl("123456", { key: "abcd" });
   assertEquals(
     result,
     expected,
@@ -143,7 +143,7 @@ Deno.test("file accept key", () => {
 Deno.test("file accept custom transformations", () => {
   const expected = "https://example.com/assets/123456?" +
     "fit=cover&width=100&height=99&quality=66&format=jpg";
-  const result = sdk.file("123456", {
+  const result = sdk.fileUrl("123456", {
     fit: "cover",
     width: 100,
     height: 99,
@@ -159,7 +159,7 @@ Deno.test("file accept custom transformations", () => {
 Deno.test("file accept advanced transformations", () => {
   const expected = "https://example.com/assets/123456?" +
     'transforms=[["blur",45],["tint","rgb(255, 0, 0)"],["expand",{"right":200,"bottom":150}]]';
-  const result = sdk.file("123456", {}, [
+  const result = sdk.fileUrl("123456", {}, [
     ["blur", 45],
     ["tint", "rgb(255, 0, 0)"],
     [

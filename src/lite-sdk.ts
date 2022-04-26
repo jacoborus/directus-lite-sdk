@@ -66,7 +66,7 @@ export class LiteSdk {
     const queryString = getQueryParams(params);
     return `${this.apiUrl}/${path}${queryString}`;
   }
-  file(
+  fileUrl(
     id: string,
     options = {} as FileOptions,
     advanced = [] as AdvancedTransformations,
