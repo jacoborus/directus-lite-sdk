@@ -71,14 +71,14 @@ Deno.test("query with filter and deep", () => {
 
 Deno.test("query with filter and deep", () => {
   const expected = "?aggregate[avg]=cost" +
-    "&alias[all_translations]=translations&alias[dutch_translations]=translations";
+    "&alias[all_translations]=translations&alias[dutch_translations]=translations2";
   const result = getQueryParams({
     aggregate: {
       avg: "cost",
     },
     alias: {
       "all_translations": "translations",
-      "dutch_translations": "translations",
+      "dutch_translations": "translations2",
     },
   });
   assertEquals(

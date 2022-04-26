@@ -1,16 +1,17 @@
 interface QueryParams {
   filter?: DeepParam;
   fields?: string | string[];
+  // TODO: sort could be an array like fields
   sort?: string;
   search?: string;
-  limit?: string | number;
-  offset?: string | number;
-  page?: string | number;
+  limit?: number;
+  offset?: number;
+  page?: number;
   aggregate?: Record<string, string>;
   deep?: DeepParam;
   alias?: Record<string, string>;
   export?: "json" | "csv" | "xml";
-  meta?: string;
+  meta?: "total_count" | "filter_count" | "*";
 }
 
 interface DeepParam {
