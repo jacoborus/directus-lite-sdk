@@ -87,6 +87,19 @@ Deno.test("query with filter and deep", () => {
   );
 });
 
+Deno.test("query fields and sort as arrays", () => {
+  const expected = "?fields=name,age,other.*" +
+    "&sort=-name,age";
+  const result = getQueryParams({
+    sort: ["-name", "age"],
+    fields: ["name", "age", "other.*"],
+  });
+  assertEquals(
+    result,
+    expected,
+  );
+});
+
 Deno.test("file", () => {
   const expected = "https://example.com/assets/123456";
   const result = sdk.file("123456");

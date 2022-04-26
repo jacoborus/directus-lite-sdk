@@ -1,8 +1,7 @@
 interface QueryParams {
   filter?: DeepParam;
   fields?: string | string[];
-  // TODO: sort could be an array like fields
-  sort?: string;
+  sort?: string | string[];
   search?: string;
   limit?: number;
   offset?: number;
@@ -20,9 +19,10 @@ interface DeepParam {
 
 type SimpleParam = typeof simpleParams[number];
 type DeepParamName = typeof deepParams[number];
+type StrArrParam = typeof strArrParams[number];
 
+const strArrParams = ["fields", "sort"] as const;
 const simpleParams = [
-  "sort",
   "search",
   "limit",
   "offset",
@@ -36,7 +36,7 @@ const recordParams = ["aggregate", "alias"] as ["aggregate", "alias"];
 export function getQueryParams(options?: QueryParams): string {
   const opts = options || ({} as QueryParams);
   const query = [
-    renderFields(),
+    ...strArrParams.map((name) => renderStrArray(name)),
     ...simpleParams.map((name) => renderSimpleParam(name)),
     ...deepParams.map((name) => renderDeep(name)),
     ...recordParams.map((name) => renderRecord(name)),
@@ -49,9 +49,11 @@ export function getQueryParams(options?: QueryParams): string {
     return opts[name] ? `${name}=${opts[name]}` : "";
   }
 
-  function renderFields() {
-    const fields = opts.fields;
-    return !fields ? "" : `fields=${fields}`;
+  function renderStrArray(name: StrArrParam): string {
+    const value = opts[name];
+    return !value
+      ? ""
+      : `${name}=${Array.isArray(value) ? value.join(",") : value}`;
   }
 
   function renderDeep(name: DeepParamName): string {
