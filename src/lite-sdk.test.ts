@@ -100,6 +100,19 @@ Deno.test("query fields and sort as arrays", () => {
   );
 });
 
+Deno.test("query accept access_token", () => {
+  const expected = "?fields=name,age,other.*" +
+    "&access_token=1234abcd";
+  const result = getQueryParams({
+    access_token: "1234abcd",
+    fields: ["name", "age", "other.*"],
+  });
+  assertEquals(
+    result,
+    expected,
+  );
+});
+
 Deno.test("file", () => {
   const expected = "https://example.com/assets/123456";
   const result = sdk.file("123456");

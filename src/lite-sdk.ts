@@ -1,4 +1,5 @@
 interface QueryParams {
+  access_token?: string;
   filter?: DeepParam;
   fields?: string | string[];
   sort?: string | string[];
@@ -23,6 +24,7 @@ type StrArrParam = typeof strArrParams[number];
 
 const strArrParams = ["fields", "sort"] as const;
 const simpleParams = [
+  "access_token",
   "search",
   "limit",
   "offset",
