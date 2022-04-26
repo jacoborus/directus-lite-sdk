@@ -121,3 +121,37 @@ Deno.test("file", () => {
     expected,
   );
 });
+
+Deno.test("file accept access_token", () => {
+  const expected = "https://example.com/assets/123456?access_token=1234abcd";
+  const result = sdk.file("123456", { access_token: "1234abcd" });
+  assertEquals(
+    result,
+    expected,
+  );
+});
+
+Deno.test("file accept key", () => {
+  const expected = "https://example.com/assets/123456?key=abcd";
+  const result = sdk.file("123456", { key: "abcd" });
+  assertEquals(
+    result,
+    expected,
+  );
+});
+
+Deno.test("file accept custom transformations", () => {
+  const expected = "https://example.com/assets/123456?" +
+    "fit=cover&width=100&height=99&quality=66&format=jpg";
+  const result = sdk.file("123456", {
+    fit: "cover",
+    width: 100,
+    height: 99,
+    quality: 66,
+    format: "jpg",
+  });
+  assertEquals(
+    result,
+    expected,
+  );
+});

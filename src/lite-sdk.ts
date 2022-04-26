@@ -35,6 +35,26 @@ const simpleParams = [
 const deepParams = ["filter", "deep"] as const;
 const recordParams = ["aggregate", "alias"] as ["aggregate", "alias"];
 
+interface FileOptions {
+  access_token?: string;
+  key?: string;
+  fit?: "cover" | "contain" | "inside" | "outside";
+  width?: number;
+  height?: number;
+  quality?: number;
+  format?: "jpg" | "png" | "webp" | "tiff";
+}
+
+const fileOptionNames = [
+  "access_token",
+  "key",
+  "fit",
+  "width",
+  "height",
+  "quality",
+  "format",
+] as const;
+
 export class LiteSdk {
   readonly apiUrl: string;
   constructor(apiUrl: string) {
@@ -44,18 +64,22 @@ export class LiteSdk {
     const queryString = getQueryParams(params);
     return `${this.apiUrl}/${path}${queryString}`;
   }
-  file(id: string): string {
-    return `${this.apiUrl}/assets/${id}`;
+  file(id: string, options = [] as FileOptions): string {
+    const params = fileOptionNames.filter((name) => name in options).map(
+      (name) => `${name}=${options[name]}`,
+    );
+    const strParams = params.length ? `?${params.join("&")}` : "";
+    return `${this.apiUrl}/assets/${id}${strParams}`;
   }
 }
 
 export function getQueryParams(options?: QueryParams): string {
   const opts = options || ({} as QueryParams);
   const query = [
-    ...strArrParams.map((name) => renderStrArray(name)),
-    ...simpleParams.map((name) => renderSimpleParam(name)),
-    ...deepParams.map((name) => renderDeep(name)),
-    ...recordParams.map((name) => renderRecord(name)),
+    ...strArrParams.map(renderStrArray),
+    ...simpleParams.map(renderSimpleParam),
+    ...deepParams.map(renderDeep),
+    ...recordParams.map(renderRecord),
   ]
     .filter((x) => x)
     .join("&");
