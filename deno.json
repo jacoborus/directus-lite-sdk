@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "strict": true
+  },
+  "lint": {
+    "files": {
+      "include": ["src/"]
+    }
+  },
+  "fmt": {
+    "files": {
+      "include": ["src/", "README.md"]
+    }
+  },
+  "tasks": {
+    "build-npm": "deno task prepare && deno run -A ./build_npm.ts $1",
+    "prepare": "deno lint && deno fmt && deno test"
+  }
+}

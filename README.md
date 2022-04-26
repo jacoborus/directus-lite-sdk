@@ -80,7 +80,7 @@ interface DeepParam {
 ### `fileUrl`
 
 Get the full path of a file. Receives the id of the file, and optionally 2 more
-arguments, the first is an object containing the `access_token` and custom
+arguments, the first one is an object containing the `access_token` and custom
 transformations; the second is an array containing the advanced transformations.
 
 ```js
@@ -91,7 +91,7 @@ const imageUrl = fileUrl(
     width: 100,
     format: "jpg",
   },
-  ["tint", rgba(255, 0, 0)],
+  ["tint", "rgba(255, 0, 0)"],
 );
 ```
 
