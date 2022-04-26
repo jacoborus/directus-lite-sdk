@@ -1,6 +1,6 @@
 import { assertEquals } from "https://deno.land/std@0.136.0/testing/asserts.ts";
 
-import LiteSdk from "./lite-sdk.ts";
+import LiteSdk, { getQueryParams } from "./lite-sdk.ts";
 
 const apiUrl = "https://example.com";
 const sdk = new LiteSdk(apiUrl);
@@ -21,5 +21,23 @@ Deno.test("query with fields as string", () => {
       fields: "uno,dos,tres.*",
     }),
     result,
+  );
+});
+
+Deno.test("query with fields as string", () => {
+  const expected =
+    "?sort=-orden&search=text&limit=99&offset=4&page=44&export=json&meta=*";
+  const result = getQueryParams({
+    sort: "-orden",
+    search: "text",
+    limit: 99,
+    offset: 4,
+    page: 44,
+    export: "json",
+    meta: "*",
+  });
+  assertEquals(
+    result,
+    expected,
   );
 });
