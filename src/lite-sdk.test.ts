@@ -155,3 +155,20 @@ Deno.test("file accept custom transformations", () => {
     expected,
   );
 });
+
+Deno.test("file accept advanced transformations", () => {
+  const expected = "https://example.com/assets/123456?" +
+    'transforms=[["blur",45],["tint","rgb(255, 0, 0)"],["expand",{"right":200,"bottom":150}]]';
+  const result = sdk.file("123456", {}, [
+    ["blur", 45],
+    ["tint", "rgb(255, 0, 0)"],
+    [
+      "expand",
+      { "right": 200, "bottom": 150 },
+    ],
+  ]);
+  assertEquals(
+    result,
+    expected,
+  );
+});

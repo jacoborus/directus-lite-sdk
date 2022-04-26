@@ -55,6 +55,8 @@ const fileOptionNames = [
   "format",
 ] as const;
 
+type AdvancedTransformations = [string, unknown][];
+
 export class LiteSdk {
   readonly apiUrl: string;
   constructor(apiUrl: string) {
@@ -64,9 +66,18 @@ export class LiteSdk {
     const queryString = getQueryParams(params);
     return `${this.apiUrl}/${path}${queryString}`;
   }
-  file(id: string, options = [] as FileOptions): string {
-    const params = fileOptionNames.filter((name) => name in options).map(
-      (name) => `${name}=${options[name]}`,
+  file(
+    id: string,
+    options = {} as FileOptions,
+    advanced = [] as AdvancedTransformations,
+  ): string {
+    const transforms = advanced.length
+      ? ["transforms=" + JSON.stringify(advanced)]
+      : [];
+    const params = transforms.concat(
+      fileOptionNames.filter((name) => name in options).map(
+        (name) => `${name}=${options[name]}`,
+      ),
     );
     const strParams = params.length ? `?${params.join("&")}` : "";
     return `${this.apiUrl}/assets/${id}${strParams}`;
