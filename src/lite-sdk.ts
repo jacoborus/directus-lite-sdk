@@ -33,6 +33,20 @@ const simpleParams = [
 const deepParams = ["filter", "deep"] as const;
 const recordParams = ["aggregate", "alias"] as ["aggregate", "alias"];
 
+export class LiteSdk {
+  readonly apiUrl: string;
+  constructor(apiUrl: string) {
+    this.apiUrl = apiUrl;
+  }
+  query(path: string, params?: QueryParams) {
+    const queryString = getQueryParams(params);
+    return `${this.apiUrl}/${path}${queryString}`;
+  }
+  file(id: string): string {
+    return `${this.apiUrl}/assets/${id}`;
+  }
+}
+
 export function getQueryParams(options?: QueryParams): string {
   const opts = options || ({} as QueryParams);
   const query = [
@@ -65,23 +79,6 @@ export function getQueryParams(options?: QueryParams): string {
     return !records ? "" : Object.keys(records)
       .map((key) => `${name}[${key}]=${records[key]}`)
       .join("&");
-  }
-}
-
-export class LiteSdk {
-  readonly apiUrl: string;
-
-  constructor(apiUrl: string) {
-    this.apiUrl = apiUrl;
-  }
-
-  query(path: string, params?: QueryParams) {
-    const queryString = getQueryParams(params);
-    return `${this.apiUrl}/${path}${queryString}`;
-  }
-
-  file(id: string): string {
-    return `${this.apiUrl}/assets/${id}`;
   }
 }
 
