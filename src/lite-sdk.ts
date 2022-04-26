@@ -6,7 +6,9 @@ interface QueryParams {
   limit?: string | number;
   offset?: string | number;
   page?: string | number;
+  aggregate?: Record<string, string>;
   deep?: DeepParam;
+  alias?: Record<string, string>;
   export?: "json" | "csv" | "xml";
   meta?: string;
 }
@@ -14,6 +16,9 @@ interface QueryParams {
 interface DeepParam {
   [key: string]: string | number | DeepParam;
 }
+
+type SimpleParam = typeof simpleParams[number];
+type DeepParamName = typeof deepParams[number];
 
 const simpleParams = [
   "sort",
@@ -24,10 +29,8 @@ const simpleParams = [
   "export",
   "meta",
 ] as const;
-type SimpleParam = typeof simpleParams[number];
-
 const deepParams = ["filter", "deep"] as const;
-type DeepParamName = typeof deepParams[number];
+const recordParams = ["aggregate", "alias"] as ["aggregate", "alias"];
 
 export function getQueryParams(options?: QueryParams): string {
   const opts = options || ({} as QueryParams);
@@ -35,6 +38,7 @@ export function getQueryParams(options?: QueryParams): string {
     renderFields(),
     ...simpleParams.map((name) => renderSimpleParam(name)),
     ...deepParams.map((name) => renderDeep(name)),
+    ...recordParams.map((name) => renderRecord(name)),
   ]
     .filter((x) => x)
     .join("&");
@@ -52,10 +56,18 @@ export function getQueryParams(options?: QueryParams): string {
   function renderDeep(name: DeepParamName): string {
     return opts[name] ? `${name}=${JSON.stringify(opts[name])}` : "";
   }
+
+  function renderRecord(name: "aggregate" | "alias"): string {
+    const records = opts[name];
+    return !records ? "" : Object.keys(records)
+      .map((key) => `${name}[${key}]=${records[key]}`)
+      .join("&");
+  }
 }
 
 export class LiteSdk {
-  apiUrl: string;
+  readonly apiUrl: string;
+
   constructor(apiUrl: string) {
     this.apiUrl = apiUrl;
   }

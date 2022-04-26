@@ -46,7 +46,6 @@ Deno.test("query with filter and deep", () => {
   const expected =
     '?filter={"project":{"_eq":"lite-sdk"},"year(pubdate)":2022}' +
     '&deep={"translations":{"_filter":{"languages_code":{"_eq":"en-ES"}}}}';
-
   const result = getQueryParams({
     filter: {
       project: {
@@ -62,6 +61,24 @@ Deno.test("query with filter and deep", () => {
           },
         },
       },
+    },
+  });
+  assertEquals(
+    result,
+    expected,
+  );
+});
+
+Deno.test("query with filter and deep", () => {
+  const expected = "?aggregate[avg]=cost" +
+    "&alias[all_translations]=translations&alias[dutch_translations]=translations";
+  const result = getQueryParams({
+    aggregate: {
+      avg: "cost",
+    },
+    alias: {
+      "all_translations": "translations",
+      "dutch_translations": "translations",
     },
   });
   assertEquals(
