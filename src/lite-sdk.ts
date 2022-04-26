@@ -1,4 +1,4 @@
-interface QueryParams {
+interface QueryOptions {
   access_token?: string;
   filter?: DeepParam;
   fields?: string | string[];
@@ -62,7 +62,7 @@ export class LiteSdk {
   constructor(apiUrl: string) {
     this.apiUrl = apiUrl;
   }
-  query(path: string, params?: QueryParams) {
+  query(path: string, params?: QueryOptions) {
     const queryString = getQueryParams(params);
     return `${this.apiUrl}/${path}${queryString}`;
   }
@@ -84,8 +84,8 @@ export class LiteSdk {
   }
 }
 
-export function getQueryParams(options?: QueryParams): string {
-  const opts = options || ({} as QueryParams);
+export function getQueryParams(options?: QueryOptions): string {
+  const opts = options || ({} as QueryOptions);
   const query = [
     ...strArrParams.map(renderStrArray),
     ...simpleParams.map(renderSimpleParam),
