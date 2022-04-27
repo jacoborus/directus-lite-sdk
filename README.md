@@ -91,7 +91,10 @@ const imageUrl = fileUrl(
     width: 100,
     format: "jpg",
   },
-  ["tint", "rgba(255, 0, 0)"],
+  [
+    ["blur", 45],
+    ["tint", "rgba(255, 0, 0)"],
+  ]
 );
 ```
 
