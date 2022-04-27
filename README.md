@@ -1,6 +1,6 @@
 # directus-lite-sdk
 
-The unofficial Directus Lite SDK in less than 1Kb
+The unofficial [Directus](https://directus.io/) Lite SDK in less than 1Kb
 
 - ~750 bytes
 - It works on the browser, Deno and Node.js
@@ -18,7 +18,7 @@ Create a new instance of the SDK passing the URL of your Directus API:
 
 ```js
 // Deno
-import DirectusLiteSdk from "https://deno.land/x/directus_lite_sdk/src/lite-sdk.ts";
+import DirectusLiteSdk from "https://deno.land/x/directus_lite_sdk/lite-sdk.ts";
 // Node
 import DirectusLiteSdk from "directus-lite-sdk";
 
@@ -77,6 +77,9 @@ interface DeepParam {
 }
 ```
 
+Check [Global Query Parameters](https://docs.directus.io/reference/query/) on
+Directus docs for more info
+
 ### `fileUrl`
 
 Get the full path of a file. Receives the id of the file, and optionally 2 more
@@ -94,7 +97,8 @@ const imageUrl = fileUrl(
   [
     ["blur", 45],
     ["tint", "rgba(255, 0, 0)"],
-  ]
+    ["expand", { "right": 200, "bottom": 150 }],
+  ],
 );
 ```
 
@@ -111,6 +115,10 @@ FileUrl options:
   format?: "jpg" | "png" | "webp" | "tiff";
 }
 ```
+
+Check
+[Requesting a Thumbnail](https://docs.directus.io/reference/files/#requesting-a-thumbnail)
+on the Directus docs for more info about custom and advanced transformations
 
 ## Test
 
