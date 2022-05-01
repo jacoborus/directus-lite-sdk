@@ -42,6 +42,7 @@ interface FileOptions {
   width?: number;
   height?: number;
   quality?: number;
+  withoutEnlargement?: boolean;
   format?: "jpg" | "png" | "webp" | "tiff";
 }
 
@@ -52,6 +53,7 @@ const fileOptionNames = [
   "width",
   "height",
   "quality",
+  "withoutEnlargement",
   "format",
 ] as const;
 
@@ -71,6 +73,7 @@ export class LiteSdk {
     options = {} as FileOptions,
     advanced = [] as AdvancedTransformations,
   ): string {
+    if (!options.withoutEnlargement) delete options.withoutEnlargement;
     const transforms = advanced.length
       ? ["transforms=" + JSON.stringify(advanced)]
       : [];

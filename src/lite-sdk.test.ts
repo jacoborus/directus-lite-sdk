@@ -142,13 +142,14 @@ Deno.test("file accept key", () => {
 
 Deno.test("file accept custom transformations", () => {
   const expected = "https://example.com/assets/123456?" +
-    "fit=cover&width=100&height=99&quality=66&format=jpg";
+    "fit=cover&width=100&height=99&quality=66&withoutEnlargement=true&format=jpg";
   const result = sdk.fileUrl("123456", {
     fit: "cover",
     width: 100,
     height: 99,
     quality: 66,
     format: "jpg",
+    withoutEnlargement: true,
   });
   assertEquals(
     result,
