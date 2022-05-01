@@ -87,7 +87,7 @@ arguments, the first one is an object containing the `access_token` and custom
 transformations; the second is an array containing the advanced transformations.
 
 ```js
-const imageUrl = fileUrl(
+const imageUrl = sdk.fileUrl(
   "1234-abcd",
   {
     fit: "cover",
